@@ -1,9 +1,7 @@
 <?php
 include 'connect2.php';
 
-// Function to display records using bubble sort
-//paramenter: array to be sorted 
-//parameters: order either ASC or DECS
+
 function bubble_sort($array, $order) {
     $n = count($array);
     for($i = 0; $i < $n; $i++) {
@@ -19,9 +17,7 @@ function bubble_sort($array, $order) {
     return $array;
 }
 
-// Function to display records using insertion sort
-//paramenter: array to be sorted 
-//parameters: order either ASC or DECS
+
 function insertion_sort($array, $order) {
     $n = count($array);
     for($i = 1; $i < $n; $i++) {
@@ -43,9 +39,7 @@ function insertion_sort($array, $order) {
     return $array;
 }
 
-// Function to find a record using linear search
-//paramenter: array to be searched 
-//parameters: value is search element
+
 function linear_search($array, $value) {
     $n = count($array);
     for($i = 0; $i < $n; $i++) {
@@ -56,9 +50,7 @@ function linear_search($array, $value) {
     return null;
 }
 
-// Function to find a record using binary search
-//paramenter: array to be searched 
-//parameters: value is search element
+
 function binary_search($array, $value) {
     $n = count($array);
     $left = 0;
@@ -76,11 +68,11 @@ function binary_search($array, $value) {
     return null;
 }
 
-// Get records from the database
+
 $sql = "SELECT * FROM products";
 $result = mysqli_query($conn, $sql);
 
-// Insert records in array
+
 $goals = array();
 if(mysqli_num_rows($result) > 0) {
     while($row = mysqli_fetch_assoc($result)) {
@@ -88,21 +80,18 @@ if(mysqli_num_rows($result) > 0) {
     }
 }
 
-// Check if user selected a sort order in form
+
 $order = isset($_POST["order"]) ? $_POST["order"] : "";
 
-// Check if user selected a search method in form
+
 $search_method = isset($_POST["search_method"]) ? $_POST["search_method"] : "";
 
-// Check if user selected a sort method in form
+
 $sort_method = isset($_POST["sort_method"]) ? $_POST["sort_method"] : "";
 
-// Check if user submitted a search value in form
 $search_value = isset($_POST["search_value"]) ? $_POST["search_value"] : "";
 
-// Sort the goals array based on user selected sort order either ASC or DESC
 if($order == "ASC" || $order == "DESC") {;
-    // use the selected sorting method defined above
     if($sort_method == "bubble") {
         $goals = bubble_sort($goals, $order);
         } elseif($sort_method == "insertion") {
@@ -110,13 +99,10 @@ if($order == "ASC" || $order == "DESC") {;
         }
 }
 
-// Find a record based on user selected search method and value
 $found_goal = null;
 if($search_method == "linear") {
-    //call linear_search method and get search element 
 $found_goal = linear_search($goals, $search_value);
 } elseif($search_method == "binary") {
-    //call linear_search method and get search element 
 $found_goal = binary_search($goals, $search_value);
 }
 
@@ -189,7 +175,6 @@ $found_goal = binary_search($goals, $search_value);
     <?php endif; ?>
     <br>
     <?php if($found_goal !== null): ?>
-        <!-- Return the goal text field of the recod find -->
         <p>Goal found: <?php echo $found_goal["productName"]; ?></p>
     <?php endif; ?>
 </body>

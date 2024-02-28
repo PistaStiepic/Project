@@ -1,7 +1,7 @@
 <?php
 	$conn = mysqli_connect("localhost", "root", "", "sor_term3");
 
-	// Check connection
+	
 	if($conn === false){
 		die("ERROR: Could not connect. "
 			. mysqli_connect_error());
